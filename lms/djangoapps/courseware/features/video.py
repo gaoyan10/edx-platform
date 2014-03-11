@@ -139,21 +139,6 @@ def add_video_to_course(course, player_mode, hashes, display_name='Video'):
         filename = _get_sjson_filename(kwargs['metadata']['sub'], 'en')
         _upload_file(filename, course_location)
 
-    conversions = {
-        'transcripts': json.loads,
-        'download_track': json.loads,
-        'download_video': json.loads,
-    }
-
-    for key in kwargs['metadata']:
-        if key in conversions:
-            kwargs['metadata'][key] = conversions[key](kwargs['metadata'][key])
-
-    course_location = world.scenario_dict['COURSE'].location
-    if 'sub' in kwargs['metadata']:
-        filename = _get_sjson_filename(kwargs['metadata']['sub'], 'en')
-        _upload_file(filename, course_location)
-
     if 'transcripts' in kwargs['metadata']:
         for lang, filename in kwargs['metadata']['transcripts'].items():
             _upload_file(filename, course_location)
